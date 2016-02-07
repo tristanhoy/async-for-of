@@ -1,6 +1,6 @@
 {
   "name": "async-for-of",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Promisified, asynchronous ES6 for..of",
   "main": "lib/index.js",
   "directories": {
