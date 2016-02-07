@@ -1,0 +1,30 @@
+{
+  "name": "async-for-of",
+  "version": "1.0.0",
+  "description": "Promisified, asynchronous ES6 for..of",
+  "main": "lib/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test --require test/helpers/init.js"
+  },
+  "keywords": [ "async", "for", "of", "loop", "promise", "iterate", "iteration" ],
+  "author": {
+	"name": "Tristan Hoy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tristanhoy/async-for-of"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tristanhoy/async-for-of/issues"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "chai-as-promised": "^5.2.0",
+    "mocha": "^2.3.4"
+  }
+}
