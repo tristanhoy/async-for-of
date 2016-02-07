@@ -44,7 +44,7 @@ forOf(asyncRandomGenerator, (item, next, end) => {
       end(val)
     else
       next()
-  });
+  })
 }).then(val => console.log('Success: ' + val))
 ```
 
@@ -90,8 +90,8 @@ var peers = [
 forOf(peers, (peer, next, end) => {
   console.log('Attempting to connect to ' + JSON.stringify(peer))
 
-  var socket = net.connect(peer.port, peer.host);
-  socket.on('connect', () => end({ peer, socket }));
+  var socket = net.connect(peer.port, peer.host)
+  socket.on('connect', () => end({ peer, socket }))
   socket.on('error', next)
 }).then(result => {
   console.log('Peer found: ' + JSON.stringify(result.peer))
