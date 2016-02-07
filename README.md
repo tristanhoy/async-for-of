@@ -12,13 +12,13 @@ npm install async-for-of
 var forOf = require('async-for-of')
 
 forOf(iterable, (item, next, end) => { 
-	//do something with item, then call next() or end(result)
+  //do something with item, then call next() or end(result)
 }).then((result) => {
-	//do something with the result
+  //do something with the result
 })
 ```
 
-**iterable** is an array, generator, function or custom iterable returning any type (typically Promises)
+**iterable** is an array, generator, function or custom iterable of any type (typically Promises)
 
 **forOf** returns a Promise that is fulfilled when:
 
@@ -33,18 +33,18 @@ This example asynchronously generates random numbers and resolves when the resul
 
 ```js
 var asyncRandomGenerator = () => {
-	console.log('Generating value')
-	return Promise.resolve(Math.random())
+  console.log('Generating value')
+  return Promise.resolve(Math.random())
 }
 
 forOf(asyncRandomGenerator, (item, next, end) => {
-	item.then(val => {
-		console.log('Inspecting value')
-		if (val < 0.1)
-			end(val)
-		else
-			next()
-	});
+  item.then(val => {
+    console.log('Inspecting value')
+    if (val < 0.1)
+      end(val)
+    else
+      next()
+  });
 }).then(val => console.log('Success: ' + val))
 ```
 
@@ -53,22 +53,22 @@ This builds on the above example, using an ES6 generator to add some control flo
 
 ```js
 var asyncRandomGenerator = function*() {
-	var maxAttempts = 5
-	for (var i = 0; i < maxAttempts; i++) {
-		console.log('Generating value')
-		yield Promise.resolve(Math.random())
-	}
-	throw 'Max Attempts Exceeded'
+  var maxAttempts = 5
+  for (var i = 0; i < maxAttempts; i++) {
+    console.log('Generating value')
+    yield Promise.resolve(Math.random())
+  }
+  throw 'Max Attempts Exceeded'
 }
 
 forOf(asyncRandomGenerator(), (promise, next, end) => {
-	promise.then(val => {
-		console.log('Inspecting value')
-		if (val < 0.1)
-			end(val)
-		else
-			next()
-	});
+  promise.then(val => {
+    console.log('Inspecting value')
+    if (val < 0.1)
+      end(val)
+    else
+      next()
+    });
 }).then(val => console.log('Success: ' + val))
 .catch(err => console.log('Failure: ' + err))
 ```
@@ -82,20 +82,20 @@ var server = net.createServer();
 server.listen(8002);
 
 var peers = [
-	{ host: '127.0.0.1', port: 8000 },
-	{ host: '127.0.0.1', port: 8001 },
-	{ host: '127.0.0.1', port: 8002 }
+  { host: '127.0.0.1', port: 8000 },
+  { host: '127.0.0.1', port: 8001 },
+  { host: '127.0.0.1', port: 8002 }
 ]
 
 forOf(peers, (peer, next, end) => {
-	console.log('Attempting to connect to ' + JSON.stringify(peer))
-	
-	var socket = net.connect(peer.port, peer.host);
-	socket.on('connect', () => end({ peer, socket }));
-	socket.on('error', next)
+  console.log('Attempting to connect to ' + JSON.stringify(peer))
+
+  var socket = net.connect(peer.port, peer.host);
+  socket.on('connect', () => end({ peer, socket }));
+  socket.on('error', next)
 }).then(result => {
-	console.log('Peer found: ' + JSON.stringify(result.peer))
-	
-	//do something with result.socket
+  console.log('Peer found: ' + JSON.stringify(result.peer))
+  
+  //do something with result.socket
 })
 ```
